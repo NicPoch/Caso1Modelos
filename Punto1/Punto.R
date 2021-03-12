@@ -45,7 +45,7 @@ for(n in S_e)
     }
     else if((iP==i-1)&(jP==j+1))
     {
-      matrizQ[n,n_1]<-mu*min(c(i,k))*theta
+      matrizQ[n,n_1]<-mu*min(c(i,k))
     }
     else if((iP==i+1)&(jP==j-1))
     {
@@ -76,7 +76,7 @@ colnames(alpha)<-S_e
 index<-paste(a,b,sep=",")
 alpha[1,index]<-1
 t<-5
-pi_t<-alpha%*%expm((matrizQ*t))
+pi_t<-alpha%*%expm((matrizQ*(t/60)))
 cantidades<-matrix(0,nrow=length(S_e),ncol=1)
 row.names(cantidades)<-S_e
 for(S in S_e)
@@ -123,7 +123,7 @@ for(n in S_e)
     }
     else if((iP==i-1)&(jP==j+1))
     {
-      matrizQ[n,n_1]<-mu*min(c(i,k))*theta
+      matrizQ[n,n_1]<-mu*min(c(i,k))
     }
     else if((iP==i+1)&(jP==j-1))
     {
@@ -164,4 +164,6 @@ for(tiempo in t)
   tramitesUnDia[(tiempo*2)+1,1]<-tiempo
   tramitesUnDia[(tiempo*2)+1,2]<-E_t
 }
-View(tramitesUnDia)
+tramitesUnDia<-data.frame(tramitesUnDia)
+dimnames(tramitesUnDia)<-list(t,c("Tiempo","Trámites"))
+plot_ly(tramitesUnDia,x=tramitesUnDia[,1],y=tramitesUnDia[,2],type='scatter',mode='lines+markers')%>%layout(xaxis=list(title="Horas"),yaxis=list(title="Trámites"),title="E[Trámites] en la notaría")
