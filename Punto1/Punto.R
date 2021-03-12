@@ -41,19 +41,19 @@ for(n in S_e)
     jP<-as.numeric(strsplit(n_1,split = ",")[[1]][2])
     if((iP==i+1)&(j==jP))
     {
-      matrizQ[n,n_1]<-p*(1/gamma)
+      matrizQ[n,n_1]<-p*(gamma)
     }
     else if((iP==i-1)&(jP==j+1))
     {
-      matrizQ[n,n_1]<-mu*min(c(i,k))
+      matrizQ[n,n_1]<-(1/mu)*min(c(i,k))
     }
     else if((iP==i+1)&(jP==j-1))
     {
-      matrizQ[n,n_1]<-r*theta*min(c(m,j))
+      matrizQ[n,n_1]<-r*(1/theta)*min(c(m,j))
     }
     else if((iP==i)&(jP==j-1))
     {
-      matrizQ[n,n_1]<-(1-r)*theta*min(c(m,j))
+      matrizQ[n,n_1]<-(1-r)*(1/theta)*min(c(m,j))
     }
     else
     {
@@ -88,8 +88,8 @@ print(ET)
 #-----------------Punto C---------------------------------
 gamma<-5
 p<-0.35
-mu<-2
-theta<-1.5
+mu<-2#1/2
+theta<-1.5#1/1.5==2/3
 k<-2
 m<-2
 r<-0.2
@@ -119,19 +119,19 @@ for(n in S_e)
     jP<-as.numeric(strsplit(n_1,split = ",")[[1]][2])
     if((iP==i+1)&(j==jP))
     {
-      matrizQ[n,n_1]<-p*(1/gamma)
+      matrizQ[n,n_1]<-p*(gamma)
     }
     else if((iP==i-1)&(jP==j+1))
     {
-      matrizQ[n,n_1]<-mu*min(c(i,k))
+      matrizQ[n,n_1]<-(1/mu)*min(c(i,k))
     }
     else if((iP==i+1)&(jP==j-1))
     {
-      matrizQ[n,n_1]<-r*theta*min(c(m,j))
+      matrizQ[n,n_1]<-(1/r)*theta*min(c(m,j))
     }
     else if((iP==i)&(jP==j-1))
     {
-      matrizQ[n,n_1]<-(1-r)*theta*min(c(m,j))
+      matrizQ[n,n_1]<-(1-r)*(1/theta)*min(c(m,j))
     }
     else
     {
