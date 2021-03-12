@@ -47,10 +47,12 @@ p_estables<-steadyStates(CMTD)
 EL<-(p_estables%*%matrix(S_x,ncol = 1,nrow=length(S_x)))[1,1]
 #Valor esperado de lotes que se lleva el camión
 print("El camión recoje:")
+#hay menos que la capacidad máxima del camión
 if(EL<h)
 {
   print(EL)
 }
+#hay más que la capacidad máxima del camión
 if(EL>=h)
 {
   print(h)
@@ -66,6 +68,7 @@ for(n in 0:4)
 {
   pi_n<-alpha%*%(matrizP%^%n)
   EL_n<-(pi_n%*%matrix(S_x,ncol = 1,nrow=length(S_x)))[1,1]
+  #si el valor esperado al final de la n-esima semana es mayor a h se suma un punto de perdida
   if(EL_n>h)
   {
     puntosPerdidos<-puntosPerdidos+beta

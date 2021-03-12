@@ -79,6 +79,7 @@ t<-5
 pi_t<-alpha%*%expm((matrizQ*(t/60)))
 cantidades<-matrix(0,nrow=length(S_e),ncol=1)
 row.names(cantidades)<-S_e
+#Se hace el producto vectorial entre el vector de distribución de estados y las respectivas cantidades
 for(S in S_e)
 {
   cantidades[S,1]<-as.numeric(strsplit(S,split=",")[[1]][1])+as.numeric(strsplit(S,split=",")[[1]][2])
@@ -157,6 +158,7 @@ for(S in S_e)
 {
   cantidades[S,1]<-as.numeric(strsplit(S,split=",")[[1]][1])+as.numeric(strsplit(S,split=",")[[1]][2])
 }
+# se van almacenando los valores esperados de cada 1/2 hora
 for(tiempo in t)
 {
   pi_t<-alpha%*%expm(matrizQ*tiempo)
@@ -166,4 +168,5 @@ for(tiempo in t)
 }
 tramitesUnDia<-data.frame(tramitesUnDia)
 dimnames(tramitesUnDia)<-list(t,c("Tiempo","Trámites"))
+#Gráfica
 plot_ly(tramitesUnDia,x=tramitesUnDia[,1],y=tramitesUnDia[,2],type='scatter',mode='lines+markers')%>%layout(xaxis=list(title="Horas"),yaxis=list(title="Trámites"),title="E[Trámites] en la notaría")
