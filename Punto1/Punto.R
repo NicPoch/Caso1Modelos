@@ -4,6 +4,7 @@
 #------------Paquetes------------------------------------------
 library(markovchain)
 library(expm)
+library(plotly)
 #-----------Definir Variables----------------------------------
 gamma<-5
 p<-0.5
@@ -142,4 +143,25 @@ for(S in S_e)
 {
   matrizQ[S,S]<-(-1)*sum(matrizQ[S,])
 }
-View(matrizQ)
+CMTC<-new("ctmc",states=as.character(S_e),generator=matrizQ)
+t<-seq(from=0,to=24,by=0.5)
+tramitesUnDia<-matrix(0,ncol=2,nrow=length(t))
+dimnames(tramitesUnDia)<-list(t,c("Tiempo","Trámites"))
+alpha<-matrix(0,ncol=length(S_e),nrow=1)
+colnames(alpha)<-S_e
+index<-paste(0,0,sep=",")
+alpha[1,index]<-1
+cantidades<-matrix(0,nrow=length(S_e),ncol=1)
+row.names(cantidades)<-S_e
+for(S in S_e)
+{
+  cantidades[S,1]<-as.numeric(strsplit(S,split=",")[[1]][1])+as.numeric(strsplit(S,split=",")[[1]][2])
+}
+for(tiempo in t)
+{
+  pi_t<-alpha%*%expm(matrizQ*tiempo)
+  E_t<-(pi_t%*%cantidades)[1,1]
+  tramitesUnDia[(tiempo*2)+1,1]<-tiempo
+  tramitesUnDia[(tiempo*2)+1,2]<-E_t
+}
+View(tramitesUnDia)
